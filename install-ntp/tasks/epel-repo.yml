@@ -1,0 +1,17 @@
+---
+  - name: commenting line in epel 
+    replace: 
+      path: "{{ file_dir }}{{ item }}"
+      regexp: '^metalink=(.*)$'
+      replace: '#metalink=\1'
+    loop: "{{ file_dest }}"
+        
+  - name: uncommenting line in epel
+    replace:
+      path: "{{ file_dir }}{{ item }}"
+      regexp: '^#baseurl=(.*)$'
+      replace: 'baseurl=\1'
+    loop: "{{ file_dest }}"
+
+
+   

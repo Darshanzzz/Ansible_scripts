@@ -1,0 +1,10 @@
+---
+
+
+epel_error: "Failure talking to yum: Cannot retrieve metalink for repository: epel/x86_64. Please verify its path and try again"
+
+
+file_dir: /etc/yum.repos.d/
+file_dest:
+  - epel.repo
+  - epel-testing.repo
