@@ -1,0 +1,24 @@
+---
+
+- hosts: multi
+  become: yes
+
+  vars:
+    users:
+      - alex
+      - jason
+    
+  tasks: 
+    - name: Remove users
+      user:
+        name: "{{ item }}"
+        state: absent
+        remove: true
+      loop: "{{ users }}"
+
+    - name: Remove user directory 
+      file:
+        path: "/home/{{ item }}/"
+        state: absent
+#        recurse: true
+      loop: "{{ users }}"

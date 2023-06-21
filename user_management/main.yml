@@ -1,0 +1,20 @@
+---
+
+- hosts: app
+  become: yes
+
+  vars_files:
+    - vars/passwords.yml
+  tasks:
+    - name: Create user call alex 
+      user:
+        name: alex
+        password: "{{ alex |  password_hash }}"
+        create_home: yes
+        state: present
+        generate_ssh_key: true
+        ssh_key_bits: 2048
+        update_password: always
+
+    - name: Set password expiry 
+      command: chage --lastday 0 alex

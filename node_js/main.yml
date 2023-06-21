@@ -1,0 +1,39 @@
+---
+
+- hosts: app
+  become: yes
+
+  vars:
+    node_apps_location: usr/local/opt/node  
+
+  pre_tasks:
+    - import_tasks: tasks/pre-tasks.yml
+
+  tasks:
+    - name: Install Node.js and npm
+      yum:
+        name: npm
+        state: present
+        enablerepo: epel
+
+    - name: Ensure firewalld is stopped (testing purpose)
+      service:
+        name: firewalld
+        state: stopped
+    
+    - name: Ensure Node.js app folder exists.
+      file: 
+        path: "{{ node_apps_location }}" 
+        state: directory
+
+    - name: Copy example Node.js app to server
+      copy:
+        src: app
+        dest: "{{ node_apps_location }}"
+
+
+    - name: Install app dependencies defined in package.json.
+      npm: 
+        path: "{{ node_apps_location }}/app"
+
+   
